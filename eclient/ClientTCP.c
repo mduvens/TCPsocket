@@ -7,8 +7,7 @@
 
 #define RCVBUFSIZE 32   /* Size of receive buffer */
 
-void DieWithError(char *errorMessage);  /* Error handling function */
-
+void DieWithError(char *errorMessage); 
 
 int main(int argc, char *argv[])
 {
@@ -32,8 +31,9 @@ int main(int argc, char *argv[])
     serverPort = atoi(argv[2]); 
 
     /* Create the socket - socket(Communication Domain (IPv4,UNIX), Socket Type (STREAM/DGRAM), Protocol (TCP/UDP)) */
-    if ((clientSocket = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0) 
+    if ((clientSocket = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0){
         DieWithError("Client socket() failed");
+    }
 
     /* Define the echo server's address */
     memset(&serverAddress, 0, sizeof(serverAddress));     /* Zero out structure */
@@ -42,8 +42,9 @@ int main(int argc, char *argv[])
     serverAddress.sin_port        = htons(serverPort); /* Server port */
 
     /* Connect to server - connect(Socket, Server Address, Size of Server Address)*/
-    if (connect(clientSocket, (struct sockaddr *) &serverAddress, sizeof(serverAddress)) < 0)
+    if (connect(clientSocket, (struct sockaddr *) &serverAddress, sizeof(serverAddress)) < 0){
         DieWithError("Client couldn't connect");
+    }
 
     /* Get the message from user */
     printf("Enter a message: ");
@@ -51,8 +52,9 @@ int main(int argc, char *argv[])
     echoStringLen = strlen(echoString);   
 
     /* Send communication - send(Socket, Message, Size of Messagge, Special Options)*/
-    if (send(clientSocket, echoString, echoStringLen, 0) != echoStringLen)
+    if (send(clientSocket, echoString, echoStringLen, 0) != echoStringLen){
         DieWithError("Client message has different size than expected");
+    }
 
     /* Receive back the sent/echoed string */
     totalBytes = 0;
@@ -60,8 +62,9 @@ int main(int argc, char *argv[])
     while (totalBytes < echoStringLen)
     {
         /* Receive echo - recv(Socket, Message, Size of Message, Special Options) */
-        if ((bytesReceived = recv(clientSocket, echoBuffer, RCVBUFSIZE - 1, 0)) <= 0)
+        if ((bytesReceived = recv(clientSocket, echoBuffer, RCVBUFSIZE - 1, 0)) <= 0){
             DieWithError("recv() failed or connection closed prematurely");
+        }
         totalBytes += bytesReceived;  
         echoBuffer[bytesReceived] = '\0';  
         printf("%s", echoBuffer);     
