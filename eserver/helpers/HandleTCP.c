@@ -5,21 +5,23 @@
 #define RCVBUFSIZE 32   
 
 void DieWithError(char *errorMessage); 
-void upperString(char *lower);
 
-void upperString(char * lower){  /* Convert to upper case */ 
+void upperString(char * lower){  
     int i = 0;
     while(lower[i]){
-        if(lower[i] >= 'a' && lower[i] <= 'z')    /* Check if it's a lower case character  */
-            lower[i] = lower[i] - 32;             /* If positive, convert it to upper case*/   
+        if(lower[i] >= 'a' && lower[i] <= 'z'){ /* Check if it's a lower case character  */
+            lower[i] = lower[i] - 32;           /* If positive, convert it to upper case*/   
+        }                    
         i++;            
     }  
 }
 
 void HandleTCPClient(int clientSocket)
 {
-    char echoBuffer[RCVBUFSIZE];   
-    int messageLength;                  
+    char echoBuffer[RCVBUFSIZE];   /* Buffer to store each communication*/
+    int messageLength;  
+
+    /* Get the client message - recv(Client Socket, Message Buffer, Size of Buffer)*/
     if ((messageLength = recv(clientSocket, echoBuffer, RCVBUFSIZE, 0)) < 0){
         DieWithError("Server didn't receive.");
     }
@@ -33,11 +35,11 @@ void HandleTCPClient(int clientSocket)
             DieWithError("Server didn't send.");
         }
 
-        /* Check for more data - recv(Client Socket, Message Buffer, Size of Buffer)*/
+        /* Check for more data*/
         if ((messageLength = recv(clientSocket, echoBuffer, RCVBUFSIZE, 0)) < 0){
             DieWithError("Server didn't receive.");
         }
 
     }
-    close(clientSocket);    /* Close client socket */
+    close(clientSocket);  /* Close client socket */
 }

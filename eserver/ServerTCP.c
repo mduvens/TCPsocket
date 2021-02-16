@@ -6,11 +6,11 @@
 #include <unistd.h>     /* for close() */
 
 
-#define MAXPENDING 5    /* Maximum outstanding connection requests */
+#define MAXPENDING 5    /* Maximum queue size */
 
+/* External Functions that we are going to use */
 void DieWithError(char *errorMessage);  
 void HandleTCPClient(int clientSocketet);   
-
 
 int main(int argc, char *argv[])
 {

@@ -6,6 +6,7 @@
 #include <unistd.h>     
 
 #define RCVBUFSIZE 32   /* Size of receive buffer */
+#define MAXSIZE 256 /* Max size of message */
 
 void DieWithError(char *errorMessage); 
 
@@ -15,7 +16,7 @@ int main(int argc, char *argv[])
     char *serverIP;                  
     struct sockaddr_in serverAddress; 
     unsigned short serverPort;     
-    char echoString[256];             
+    char echoString[MAXSIZE];             
     char echoBuffer[RCVBUFSIZE];   
     unsigned int echoStringLen;      
     int bytesReceived; /* can be -1 with error, so it's not unsigned */
@@ -35,11 +36,11 @@ int main(int argc, char *argv[])
         DieWithError("Client socket() failed");
     }
 
-    /* Define the echo server's address */
-    memset(&serverAddress, 0, sizeof(serverAddress));     /* Zero out structure */
-    serverAddress.sin_family      = AF_INET;             /* Internet address family */
-    serverAddress.sin_addr.s_addr = inet_addr(serverIP);   /* Server IP address */
-    serverAddress.sin_port        = htons(serverPort); /* Server port */
+    /* Define the echoServer's address */
+    memset(&serverAddress, 0, sizeof(serverAddress));       /* Zero out structure */
+    serverAddress.sin_family = AF_INET;                     /* Internet address family */
+    serverAddress.sin_addr.s_addr = inet_addr(serverIP);    /* Server IP address */
+    serverAddress.sin_port = htons(serverPort); /* Server port */
 
     /* Connect to server - connect(Socket, Server Address, Size of Server Address)*/
     if (connect(clientSocket, (struct sockaddr *) &serverAddress, sizeof(serverAddress)) < 0){
@@ -48,7 +49,7 @@ int main(int argc, char *argv[])
 
     /* Get the message from user */
     printf("Enter a message: ");
-    fgets(echoString, sizeof echoString, stdin);  
+    fgets(echoString, sizeof(echoString), stdin);  
     echoStringLen = strlen(echoString);   
 
     /* Send communication - send(Socket, Message, Size of Messagge, Special Options)*/
@@ -66,7 +67,7 @@ int main(int argc, char *argv[])
             DieWithError("recv() failed or connection closed prematurely");
         }
         totalBytes += bytesReceived;  
-        echoBuffer[bytesReceived] = '\0';  
+        echoBuffer[bytesReceived] = '\0'; /* Close/End the string */  
         printf("%s", echoBuffer);     
     }
     printf("Closed connection with %s \n", inet_ntoa(serverAddress.sin_addr));    
