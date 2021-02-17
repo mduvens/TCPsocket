@@ -2,9 +2,9 @@
 #include <sys/socket.h> 
 #include <unistd.h>     
 #include <string.h>
-#define RCVBUFSIZE 32   
+#include "DieWithError.h"
 
-void DieWithError(char *errorMessage); 
+#define RCVBUFSIZE 32   
 
 void upperString(char * lower){  
     int i = 0;

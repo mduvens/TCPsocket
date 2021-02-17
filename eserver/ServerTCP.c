@@ -4,13 +4,11 @@
 #include <stdlib.h>     /* for atoi() and exit() */
 #include <string.h>     /* for memset() */
 #include <unistd.h>     /* for close() */
-
+#include "helpers/DieWithError.h" /* for DieWithError() */
+#include "helpers/HandleTCP.h" /* for HandleTCPClient() */
 
 #define MAXPENDING 5    /* Maximum queue size */
 
-/* External Functions that we are going to use */
-void DieWithError(char *errorMessage);  
-void HandleTCPClient(int clientSocketet);   
 
 int main(int argc, char *argv[])
 {

@@ -4,11 +4,11 @@
 #include <stdlib.h>     
 #include <string.h>    
 #include <unistd.h>     
+#include "helpers/DieWithError.h"
 
 #define RCVBUFSIZE 32   /* Size of receive buffer */
 #define MAXSIZE 256 /* Max size of message */
 
-void DieWithError(char *errorMessage); 
 
 int main(int argc, char *argv[])
 {
