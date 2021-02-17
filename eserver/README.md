@@ -1,18 +1,14 @@
 ### Compile
 
-1. Create 'build' folder and make it your root
+1. Create 'build' folder && make it your root
 ``` mkdir build && cd build ```
 
-2. Generate files and build the project.
+2. Generate the files && build the project.
 ``` cmake .. && make ```
 
 ### Start server 
 
-Usage:  
-``` ./ServerTCP <PORT> & ``` 
-
-Example:  
-``` ./ServerTCP 5005 &```   
+``` ./ServerTCP 5050 &```   
 
 ### End server (ubuntu)
 

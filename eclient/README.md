@@ -1,16 +1,14 @@
 ### Compile 
 
-1. Create 'build' folder and make it your root
+1. Create 'build' folder && make it your root
 ``` mkdir build && cd build ```
 
-2. Generate files and build the project.
-``` cmake .. && cd build ```
+2. Generate the files && build the project.
+``` cmake .. && make ```
 
-### Start client - Server must be running on the PORT specified (see ../eserver)
+### Start client 
+#### Assuming your server is running on PORT 5050
 
-``` ./echoTCP <HOST> <PORT> ``` 
-
-Example: ``` ./echoTCP 0.0.0.0 5005```   
-
+``` ./ClientTCP 0.0.0.0 5050 ```   
 
 
